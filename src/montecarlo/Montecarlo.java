@@ -90,6 +90,7 @@ public class Montecarlo {
         Fila f = filas.getLast();
         
         f = f.calcularProxFila(f);
+        puntosTotal+=f.getPts();
         
         filas.add(f);
     }
