@@ -6,6 +6,7 @@
 package gui;
 
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import montecarlo.Fila;
 import montecarlo.Montecarlo;
@@ -28,13 +29,14 @@ public class FrmBowling extends javax.swing.JFrame {
         modelo.addColumn("Palos Tirados en 2 Tiro");
         modelo.addColumn("Puntos");
         modelo.addColumn("Puntaje Acumulado");
+        btn_agregarOtro.setEnabled(false);
     }
     
     //atributos
     private DefaultTableModel modelo = new DefaultTableModel();
     private Montecarlo montecarlo;
     private LinkedList<Fila> filas = new LinkedList<>();
-    
+    private int acum = 0;
     
 
     /**
@@ -70,8 +72,18 @@ public class FrmBowling extends javax.swing.JFrame {
         jLabel3.setText("Hasta");
 
         txt_desde.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_desde.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_desdeKeyTyped(evt);
+            }
+        });
 
         txt_hasta.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_hasta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_hastaKeyTyped(evt);
+            }
+        });
 
         btn_simular.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         btn_simular.setText("Simular");
@@ -83,6 +95,11 @@ public class FrmBowling extends javax.swing.JFrame {
 
         btn_agregarOtro.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         btn_agregarOtro.setText("Agregar Otro");
+        btn_agregarOtro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregarOtroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout configuracionLayout = new javax.swing.GroupLayout(configuracion);
         configuracion.setLayout(configuracionLayout);
@@ -216,41 +233,94 @@ public class FrmBowling extends javax.swing.JFrame {
         modelo.setRowCount(0);
         
         int desde = Integer.parseInt(txt_desde.getText());
-        int hasta = Integer.parseInt(txt_hasta.getText());
+        if(desde < 0)
+        {
+            //DESDE NEGATIVO
+            JOptionPane.showMessageDialog(this, "Ingrese Valores Positivos");
+            txt_desde.requestFocusInWindow();
+        }
+        else
+        {
+            int hasta = Integer.parseInt(txt_hasta.getText());
+            if(hasta < 0)
+            {
+                //HASTA NEGATIVO
+                JOptionPane.showMessageDialog(this, "Ingrese Valores Positivos");
+                txt_hasta.requestFocus();
+            }
+            else
+            {
+                
+                //GENERO SIMULACION
+                montecarlo = new Montecarlo(desde, hasta);
+                montecarlo.armarMontecarlo();
+
+                Object [] fila = new Object[7];
+                filas = montecarlo.getFilas();
+                
+
+                for (int i = 0; i < filas.size(); i++) {
+
+                    fila[0] = filas.get(i).getRonda()-1;
+                    fila[1] = filas.get(i).getRnd1();
+                    fila[2] = filas.get(i).getPalos1();
+                    fila[3] = filas.get(i).getRnd2();
+                    fila[4] = filas.get(i).getPalos2();
+                    fila[5] = filas.get(i).getPts();
+                    acum += filas.get(i).getPts();
+                    fila[6] = acum; 
+
+                    modelo.addRow(fila);
+                }
+                //Comentado hasta que se solucione la diferencia de puntajes
+//                fila[0] = null;
+//                fila[1] = null;
+//                fila[2] = null;
+//                fila[3] = null;
+//                fila[4] = null;
+//                fila[5] = null;
+//                fila[6] = montecarlo.getPuntosTotal();
+//                modelo.addRow(fila);
+
+                jTableResultados.setModel(modelo);
+                btn_agregarOtro.setEnabled(true);
+            }    
+        }
+    }//GEN-LAST:event_btn_simularActionPerformed
+
+    private void txt_desdeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_desdeKeyTyped
+        // TODO add your handling code here:
+        btn_agregarOtro.setEnabled(false);
+    }//GEN-LAST:event_txt_desdeKeyTyped
+
+    private void btn_agregarOtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarOtroActionPerformed
+        // TODO add your handling code here:
         
-        //genero la simulacion
-        montecarlo = new Montecarlo(desde, hasta);
-        montecarlo.armarMontecarlo();
+        montecarlo.agregarUnaFila();
         
         Object [] fila = new Object[7];
         filas = montecarlo.getFilas();
-        int acum = 0;
         
-        for (int i = 0; i < filas.size(); i++) {
-            
-            fila[0] = filas.get(i).getRonda()-1;
-            fila[1] = filas.get(i).getRnd1();
-            fila[2] = filas.get(i).getPalos1();
-            fila[3] = filas.get(i).getRnd2();
-            fila[4] = filas.get(i).getPalos2();
-            fila[5] = filas.get(i).getPts();
-            acum += filas.get(i).getPts();
-            fila[6] = acum; 
-            
-            modelo.addRow(fila);
-        }
-        fila[0] = null;
-        fila[1] = null;
-        fila[2] = null;
-        fila[3] = null;
-        fila[4] = null;
-        fila[5] = null;
-        fila[6] = montecarlo.getPuntosTotal();
+        Fila ultima = filas.getLast();
+        
+        fila[0] = ultima.getRonda()-1;
+        fila[1] = ultima.getRnd1();
+        fila[2] = ultima.getPalos1();
+        fila[3] = ultima.getRnd2();
+        fila[4] = ultima.getPalos2();
+        fila[5] = ultima.getPts();
+        acum += ultima.getPts();
+        fila[6] = acum;
+        
         modelo.addRow(fila);
         
         jTableResultados.setModel(modelo);
-        
-    }//GEN-LAST:event_btn_simularActionPerformed
+    }//GEN-LAST:event_btn_agregarOtroActionPerformed
+
+    private void txt_hastaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hastaKeyTyped
+        // TODO add your handling code here:
+        btn_agregarOtro.setEnabled(false);
+    }//GEN-LAST:event_txt_hastaKeyTyped
 
     
     

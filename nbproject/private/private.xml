@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Martin/Documents/MEGAsync/MontecarloBowling/src/montecarlo/Montecarlo.java</file>
-            <file>file:/C:/Users/Martin/Documents/MEGAsync/MontecarloBowling/src/montecarlo/Fila.java</file>
-            <file>file:/C:/Users/Martin/Documents/MEGAsync/MontecarloBowling/src/main/MontecarloBowling.java</file>
-            <file>file:/C:/Users/Martin/Documents/MEGAsync/MontecarloBowling/src/probabilidades/Intervalos.java</file>
+            <file>file:/E:/TPs_Simulacion/TP4/montecarlobowling/src/main/MontecarloBowling.java</file>
+            <file>file:/E:/TPs_Simulacion/TP4/montecarlobowling/src/montecarlo/Montecarlo.java</file>
+            <file>file:/E:/TPs_Simulacion/TP4/montecarlobowling/src/gui/FrmBowling.java</file>
+            <file>file:/E:/TPs_Simulacion/TP4/montecarlobowling/src/probabilidades/Intervalos.java</file>
+            <file>file:/E:/TPs_Simulacion/TP4/montecarlobowling/src/montecarlo/Fila.java</file>
         </group>
     </open-files>
 </project-private>
