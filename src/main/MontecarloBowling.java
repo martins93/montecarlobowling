@@ -18,8 +18,9 @@ public class MontecarloBowling {
      */
     public static void main(String[] args) {
         
-        Montecarlo monte = new Montecarlo(5000,5010);
+        Montecarlo monte = new Montecarlo(0,10000);
         monte.armarMontecarlo();
+        System.out.println(monte.toString());
        
         
         // TODO code application logic here

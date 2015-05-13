@@ -5,6 +5,7 @@
  */
 package montecarlo;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -23,7 +24,14 @@ public class Montecarlo {
 
     {
         filas = new LinkedList<>();
-        this.desde = desde;
+        if(desde==0)
+        {
+            this.desde = 1;
+        }
+        else
+        {
+            this.desde = desde;
+        }
         this.hasta = hasta;
         this.puntosTotal=0;
     }
@@ -72,9 +80,27 @@ public class Montecarlo {
             if(i>=desde)
             {
                 filas.add(f);
-                System.out.println(f.toString());
             }            
         }     
-        System.out.println(" PUNTOS TOTALES: " + puntosTotal);
+
+    }
+    
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        Iterator it = filas.iterator();
+        
+        while(it.hasNext())
+        {
+            sb.append(it.next().toString());
+            sb.append("\n");
+        }
+        
+        sb.append("PUNTOS TOTALES: ");
+        sb.append(puntosTotal);
+        
+        
+        return sb.toString();
     }
 }

@@ -101,10 +101,17 @@ public class Fila {
         fProxima.setRonda(fAnterior.getRonda()+1);
         fProxima.setRnd1(Math.round(rnd));
         fProxima.setPalos1(this.validarIntervalo(rnd));
-        fProxima.setRnd2(Math.round(rnd2));
-        fProxima.setPalos2(this.validarIntervalo2(rnd2,fProxima.getPalos1()));
-        fProxima.setPts(this.calcularPts(fProxima.getPalos1(), fProxima.getPalos2()));
-        
+        if(fProxima.getPalos1()!=10)
+        {
+            fProxima.setRnd2(Math.round(rnd2));
+            fProxima.setPalos2(this.validarIntervalo2(rnd2,fProxima.getPalos1()));
+            fProxima.setPts(this.calcularPts(fProxima.getPalos1(), fProxima.getPalos2()));   
+        }
+        else
+        {
+            fProxima.setPts(this.calcularPts(fProxima.getPalos1(), 0));
+        }
+       
         return fProxima;
     }
 
