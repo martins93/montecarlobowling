@@ -85,6 +85,15 @@ public class Montecarlo {
 
     }
     
+    public void agregarUnaFila()
+    {
+        Fila f = filas.getLast();
+        
+        f = f.calcularProxFila(f);
+        
+        filas.add(f);
+    }
+    
     @Override
     public String toString()
     {
