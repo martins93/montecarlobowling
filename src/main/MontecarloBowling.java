@@ -18,10 +18,8 @@ public class MontecarloBowling {
      */
     public static void main(String[] args) {
         
-        Montecarlo monte = new Montecarlo(0,5);
+        Montecarlo monte = new Montecarlo(0,10);
         monte.armarMontecarlo();
-        monte.agregarUnaFila();
-        monte.agregarUnaFila();
         System.out.println(monte.toString());
        
         

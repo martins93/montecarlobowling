@@ -17,7 +17,6 @@ public class Montecarlo {
     private LinkedList<Fila> filas;
     private int desde;
     private int hasta;
-    private int puntosTotal;
     
     
     public Montecarlo(int desde, int hasta)
@@ -33,7 +32,6 @@ public class Montecarlo {
             this.desde = desde;
         }
         this.hasta = hasta;
-        this.puntosTotal=0;
     }
 
     public LinkedList<Fila> getFilas() {
@@ -60,14 +58,6 @@ public class Montecarlo {
         this.hasta = hasta;
     }
 
-    public int getPuntosTotal() {
-        return puntosTotal;
-    }
-
-    public void setPuntosTotal(int puntosTotal) {
-        this.puntosTotal = puntosTotal;
-    }
-    
     
     public void armarMontecarlo()
     {
@@ -75,7 +65,6 @@ public class Montecarlo {
         
         for (int i = 1; i <= hasta; i++) {
             
-            puntosTotal+=f.getPts();
             f = f.calcularProxFila(f);
             if(i>=desde)
             {
@@ -89,8 +78,9 @@ public class Montecarlo {
     {
         Fila f = filas.getLast();
         
+       
         f = f.calcularProxFila(f);
-        puntosTotal+=f.getPts();
+        
         
         filas.add(f);
     }
@@ -106,9 +96,6 @@ public class Montecarlo {
             sb.append(it.next().toString());
             sb.append("\n");
         }
-        
-        sb.append("PUNTOS TOTALES: ");
-        sb.append(puntosTotal);
         
         
         return sb.toString();
